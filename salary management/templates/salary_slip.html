@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="slip-container luxury-slip">
+        <div class="professional-slip-header">
+            <div class="header-container">
+                <div class="company-branding">
+                    <div class="logo-section">
+                        <img src="{{ url_for('static', filename='sp.jpg') }}" alt="Company Logo" class="company-logo">
+                    </div>
+                    <div class="company-info">
+                        <h1 class="company-name">SAL-PAY SOLUTIONS PVT. LTD.</h1>
+                        <div class="company-address">
+                            <p>Corporate Office: Tech Park, Bangalore - 560001</p>
+                            <p>Email: hr@sal-pay.com | Phone: +91-80-12345678</p>
+                            <p>CIN: U72200KA2020PTC123456 | GSTIN: 29AABCS1234C1Z5</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="payslip-title">
+                    <h2>PAYSLIP</h2>
+                    <div class="slip-details">
+                        <p><strong>Slip ID:</strong> PAY{{ "%06d"|format(slip[0]) }}</p>
+                        <p><strong>Pay Period:</strong> {{ slip[2] }} {{ slip[3] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slip-content">
+            <div class="employee-info-section">
+                <h3 class="section-title">EMPLOYEE INFORMATION</h3>
+                <div class="employee-grid">
+                    <div class="info-card">
+                        <div class="info-item">
+                            <span class="info-label">Employee ID</span>
+                            <span class="info-value">EMP{{ "%04d"|format(slip[1]) }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Employee Name</span>
+                            <span class="info-value">{{ slip[10] }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email Address</span>
+                            <span class="info-value">{{ slip[11] }}</span>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-item">
+                            <span class="info-label">Department</span>
+                            <span class="info-value">{{ slip[13] }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Designation</span>
+                            <span class="info-value">{{ slip[12] }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Generated On</span>
+                            <span class="info-value">{{ slip[9] }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="compensation-section">
+                <div class="salary-breakdown">
+                    <div class="earnings-card">
+                        <div class="card-header earnings-header">
+                            <h3>EARNINGS</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="salary-item">
+                                <span class="item-label">Basic Salary</span>
+                                <span class="item-amount"><strong>₹</strong>{{ "%.2f"|format(slip[4]) }}</span>
+                            </div>
+                            <div class="salary-item">
+                                <span class="item-label">Allowances</span>
+                                <span class="item-amount"><strong>₹</strong>{{ "%.2f"|format(slip[5]) }}</span>
+                            </div>
+                            <div class="salary-item total-item">
+                                <span class="item-label"><strong>GROSS EARNINGS</strong></span>
+                                <span class="item-amount total-amount"><strong>₹{{ "%.2f"|format(slip[7]) }}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deductions-card">
+                        <div class="card-header deductions-header">
+                            <h3>DEDUCTIONS</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="salary-item">
+                                <span class="item-label">Income Tax</span>
+                                <span class="item-amount"><strong>₹</strong>{{ "%.2f"|format(slip[6]) }}</span>
+                            </div>
+                            <div class="salary-item">
+                                <span class="item-label">Professional Tax</span>
+                                <span class="item-amount"><strong>₹</strong>0.00</span>
+                            </div>
+                            <div class="salary-item total-item">
+                                <span class="item-label"><strong>TOTAL DEDUCTIONS</strong></span>
+                                <span class="item-amount total-amount"><strong>₹{{ "%.2f"|format(slip[6]) }}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="net-salary-section">
+                    <div class="net-pay-card">
+                        <h2>NET SALARY PAYABLE</h2>
+                        <div class="net-amount">₹{{ "%.2f"|format(slip[8]) }}</div>
+                        <p class="amount-words">Amount in Words: {{ slip[8]|int|number_to_words }} Rupees Only</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="professional-footer">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <div class="signature-section">
+                            <div class="signature-box">
+                                <div class="signature-line"></div>
+                                <p><strong>Authorized Signatory</strong></p>
+                                <p>HR Department</p>
+                                <p>SAL-PAY Solutions Pvt. Ltd.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-disclaimer">
+                    <p>This is a computer-generated document and does not require a physical signature. Generated on {{ slip[9] }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slip-actions">
+            <button onclick="window.print()" class="btn btn-primary">Print Slip</button>
+            <a href="{{ url_for('salary_slips') }}" class="btn btn-secondary">Back to Slips</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

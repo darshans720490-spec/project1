@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Employees</h2>
+        <a href="{{ url_for('add_employee') }}" class="btn btn-cta">Add New Employee</a>
+    </div>
+    
+    <div class="table-container">
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>Basic Salary</th>
+                    <th>Allowances</th>
+                    <th>Deductions</th>
+                    <th>Generate Slip</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee[0] }}</td>
+                    <td>{{ employee[1] }}</td>
+                    <td>{{ employee[2] }}</td>
+                    <td>{{ employee[3] }}</td>
+                    <td>{{ employee[4] }}</td>
+                    <td><strong>₹</strong>{{ "%.2f"|format(employee[5]) }}</td>
+                    <td><strong>₹</strong>{{ "%.2f"|format(employee[6]) }}</td>
+                    <td><strong>₹</strong>{{ "%.2f"|format(employee[7]) }}</td>
+                    <td>
+                        <a href="{{ url_for('generate_slip', employee_id=employee[0]) }}" class="btn btn-sm btn-accent">Generate Slip</a>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_employee', employee_id=employee[0]) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this employee?')">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="10" class="text-center">No employees found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
