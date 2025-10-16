@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="hero">
+        <h1>Employee Salary Management System</h1>
+        <p>Manage employee salaries and generate salary slips efficiently</p>
+    </div>
+    
+    <div class="dashboard">
+        <div class="card">
+            <h3>Manage Employees</h3>
+            <p>Add, view, and manage employee information</p>
+            <div class="button-group">
+                <a href="{{ url_for('employees') }}" class="btn btn-primary">View Employees</a>
+                <a href="{{ url_for('add_employee') }}" class="btn btn-success">Add Employee</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>Salary Slips</h3>
+            <p>View and manage generated salary slips</p>
+            <a href="{{ url_for('salary_slips') }}" class="btn btn-info">View Slips</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
